@@ -9,8 +9,9 @@ Vue.use(Router)
     hide: false, 是否在左侧菜单显示 不显示请设为 true
     title: "列表页面", 菜单标题
     icon: "md-grid", 图标
-    roleId: 1 菜单权限id 不填写等同于不需要权限校验
-    singlePage: true 单页 非嵌套栏目显示
+    roleId: 1, 菜单权限id 不填写等同于不需要权限校验
+    singlePage:, true 单页 非嵌套栏目显示
+    notCache: true  禁止缓存
 }
  */
 
