@@ -1,8 +1,3 @@
-/**
-*   @description 登录页面
-*   @author Xiaohui Zeng
-*   @date 2019/10/5
-*/
 <template>
     <div class="login-page">
         <div class="container demo-2">
@@ -54,11 +49,6 @@
                             <FormItem prop="passWord1">
                                 <Input prefix="ios-lock-outline" type="password" v-model="registerJson.passWord1" clearable placeholder="请再次输入密码" />
                             </FormItem>
-                           <!-- <FormItem prop="isSave" class="isSave flexR">
-                                <Checkbox v-model="registerJson.isSave">自动登录</Checkbox>
-                                <span class="blueText">忘记密码</span>
-                            </FormItem>-->
-
                             <FormItem>
                                 <Button type="primary" long :loading="loading" @click="login('formValidate2')">
                                     <span v-if="!loading">注册</span>
@@ -290,7 +280,7 @@
             padding: 30px;
             text-align: center;
             top: 50%;
-            left: 60%;
+            left: 65%;
             background-color: white;
             border-radius: 5px;
             width: 410px;
