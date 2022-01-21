@@ -71,7 +71,7 @@ const routersArr = (routers)=>{
 }
 
 const mutations = {
-  setRoutes: (state, routes) => {
+  SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = routersArr(constantRoutes.concat(routes))
   }
@@ -81,7 +81,7 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      commit('setRoutes', accessedRoutes)
+      commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })
   }
