@@ -1,72 +1,65 @@
-/**
- *   @description 模拟接口
- *   @author Xiaohui Zeng
- *   @date 2019/10/5
- */
 import Mock from 'mockjs'
+
 // 用户信息
 let userData = [
     {
         userId: 'admin',
-        userName: '曾小晖',
+        userName: '管理员',
         password: '123456',
-        roles: ['admin'] // 用户拥有的角色 数组
+        email: 'f123456@qq.com',
+        address: '山东省 济南市 高新区',
+        roles: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16] // 用户拥有的角色 数组
     },
     {
         userId: 'admin1',
-        userName: '曾小晖1',
+        userName: 'admin1',
         password: '123456',
-        roles: ['admin1'] // 用户拥有的角色 数组
+        roles: [1, 2, 3, 4, 5,] // 用户拥有的角色 数组
     },
     {
         userId: 'admin2',
-        userName: '曾小晖2',
+        userName: 'admin2',
         password: '123456',
-        roles: ['admin','admin1'] // 用户拥有的角色 数组
+        roles: [1, 2, 3, 4, 5,] // 用户拥有的角色 数组
     },
 ]
 // 登陆
 export const login = (prarms) => {
     const prarmsObj = JSON.parse(prarms.body);
-    console.log(prarmsObj);
     let backData = {}
-    if(prarmsObj.userName === 'admin') {
+    if (prarmsObj.userName === 'admin') {
         backData = Mock.mock({
-            userId: userData[0].userId,
-            userName: userData[0].userName,
-            roles: userData[0].roles,
-            password: userData[0].password
+            userInfo: userData[0],
+            token: 'oiik292983kkslqlo9922'
         })
-    } else if(prarmsObj.userName === 'admin1') {
+    } else if (prarmsObj.userName === 'admin1') {
         backData = Mock.mock({
-            userId: userData[1].userId,
-            userName: userData[1].userName,
-            roles: userData[1].roles,
-            password: userData[1].password
+            userInfo: userData[1],
+            token: '2312312312312312312'
         })
     } else {
         backData = Mock.mock({
-            userId: userData[2].userId,
-            userName: userData[2].userName,
-            roles: userData[2].roles,
-            password: userData[2].password
+            userInfo: userData[2],
+            token: '6755756756756756775'
         })
     }
 
-    if (checkData(prarmsObj.userName,backData.userId) && checkData(prarmsObj.password,backData.password)) {
-        return {code: 1, data: backData, info: '登录成功'}
+    if (checkData(prarmsObj.userName, backData.userInfo.userId)
+        && checkData(prarmsObj.passWord, backData.userInfo.password)) {
+        return {code: 1, data: backData, msg: '登录成功，欢迎回来'}
     } else {
-        return {code: 0, info: '账号或密码错误'}
+        return {code: 0, msg: '账号或密码错误'}
     }
 }
 // 数据校验
-const checkData =(d1,d2) =>{
-    if(d1 === d2) {
+const checkData = (d1, d2) => {
+    if (d1 === d2) {
         return true
     } else {
         return false
     }
 }
+
 //数据占位符使用
 /*
 {
