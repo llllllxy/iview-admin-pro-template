@@ -19,7 +19,7 @@ import checkPermission from "./utils/permission";
 import {indexPage, loginPage} from "./config/config";
 
 // 引入mock文件 目前登录使用的是在线的fastmock
-// require('./mock/index') // mock 方式，正式发布时，注释掉该处即可
+require('./mock/index') // mock 方式，正式发布时，注释掉该处即可
 
 // 全局挂载方法
 Vue.prototype.$backPage = backPage
