@@ -8,14 +8,15 @@
                 :collapsed-width="78"
                 :width="256"
                 v-model="isCollapsed"
-                :class="themeType==='light'?'themeLight':'themeDark'"
-            >
+                :class="themeType === 'light' ? 'themeLight' : 'themeDark'">
+
                 <!--:class="isCollapsed?'collapsed_left':''"-->
-                <div class="logo" :class="headMaxWidth?'headMaxWidth':''">
+                <div class="logo" :class="headMaxWidth ? 'headMaxWidth' : ''">
                     <img v-if="!isCollapsed && headMaxWidth" :src="headMaxWidthLogoImg" alt="">
                     <img v-if="!isCollapsed && !headMaxWidth" :src="logoImg" alt="">
-                    <img v-if="isCollapsed" src="../../assets/main/logo-small.png" alt="">
+                    <img v-if="isCollapsed" :src="logoSmall" alt="">
                 </div>
+
                 <Menu
                     :active-name="activeName"
                     :theme="themeType"
@@ -24,36 +25,60 @@
                     :open-names="openNames"
                     accordion
                     ref="side_menu"
-                    @on-select="menuNav"
-                    @on-open-change="open"
-                >
-                    <Submenu v-for="(item,index) in routersArr" :key="index" v-if="!isCollapsed && !item.meta.hide && !item.meta.singlePage"
-                             :name="item.name">
-                        <template slot="title" v-if="!isCollapsed">
-                            <Icon :type="item.meta.icon"/>
-                            <span class="titlespan">{{item.meta.title}}</span>
-                        </template>
-                        <menu-item v-if="!isCollapsed && !it.meta.hide" v-for="it in item.children" :key="it.name" :name="it.name">
-                            <span>{{it.meta.title}}</span>
+                    @on-select="menuNav">
+
+                    <template v-for="(item,index) in routersArr">
+
+                        <Submenu v-if="!isCollapsed && !item.meta.hide && !item.meta.singlePage"
+                                 :name="item.name">
+                            <template slot="title" v-if="!isCollapsed">
+                                <Icon :type="item.meta.icon"/>
+                                <span class="titlespan">{{item.meta.title}}</span>
+                            </template>
+
+                            <template v-for="it in item.children">
+                                <!--三级菜单的处理-->
+                                <Submenu v-if="!isCollapsed && it.children" :name="it.name">
+                                    <template slot="title" v-if="!isCollapsed">
+                                        <span class="titlespan">{{it.meta.title}}</span>
+                                    </template>
+
+                                    <menu-item v-if="!isCollapsed && !node.meta.hide"
+                                               v-for="node in it.children"
+                                               :name="node.name">
+                                        <span style="margin-left: 15%">{{node.meta.title}}</span>
+                                    </menu-item>
+                                </Submenu>
+
+                                <menu-item v-if="!isCollapsed &&!it.children && !it.meta.hide"
+                                           :key="it.name"
+                                           :name="it.name">
+                                    <span>{{it.meta.title}}</span>
+                                </menu-item>
+                            </template>
+                        </Submenu>
+
+                        <!--如果只有一个子路由-->
+                        <menu-item v-else-if="!isCollapsed && !item.meta.hide && item.meta.singlePage"
+                                   v-for="it in item.children" :key="index" class="ivu-menu-submenu"
+                                   :class="{ 'liActive': $route.name === it.name}" style="padding: 0!important;"
+                                   :name="it.name">
+                            <div class="ivu-menu-submenu-title">
+                                <Icon :type="item.meta.icon"/>
+                                <span style="margin-left: 10px">{{it.meta.title}}</span>
+                            </div>
                         </menu-item>
-                    </Submenu>
-                    <!--如果只有一个子路由-->
-                    <menu-item v-else-if="!isCollapsed && !item.meta.hide && item.meta.singlePage"
-                              v-for="it in item.children" :key="index" class="ivu-menu-submenu"
-                              :class="{ 'liActive': $route.name === it.name}" style="padding: 0!important;"
-                              :name="it.name">
-                        <div class="ivu-menu-submenu-title">
-                            <Icon :type="item.meta.icon"/>
-                            <span style="margin-left: 10px">{{it.meta.title}}</span>
-                        </div>
-                    </menu-item>
+
+                    </template>
+
                     <Dropdown v-for="(item,ind) in routersArr" :key="ind" v-if="isCollapsed && !item.meta.hide"
                               class="menuSmall" @on-click="dropdownNav">
                             <span :class="item.name === $route.meta.fuName?'active':''">
                                 <Icon :type="item.meta.icon"/>
                             </span>
                         <DropdownMenu slot="list">
-                            <DropdownItem v-for="it in item.children" v-if="!it.meta.hide" :key="it.name" :name="it.name"
+                            <DropdownItem v-for="it in item.children" v-if="!it.meta.hide" :key="it.name"
+                                          :name="it.name"
                                           :selected="it.name === activeName">
                                 {{it.meta.title}}
                             </DropdownItem>
@@ -65,10 +90,9 @@
                 <!--头部-->
                 <Header class="header flexR">
                     <div class="header_left flexR">
-                        <span>
+                        <span :class="['sider-trigger-a', isCollapsed ? 'collapsed' : '']">
                             <Icon
                                 @click.native="collapsedSider"
-                                :class="rotateIcon"
                                 type="md-menu"
                                 size="24"></Icon>
                         </span>
@@ -79,14 +103,16 @@
                             <Breadcrumb>
                             <BreadcrumbItem>首页</BreadcrumbItem>
                             <BreadcrumbItem>{{$route.meta.fuTitle}}</BreadcrumbItem>
-                            <BreadcrumbItem v-if="$route.meta.title !== $route.meta.fuTitle">{{$route.meta.title}}</BreadcrumbItem>
+                            <BreadcrumbItem v-if="$route.meta.title !== $route.meta.fuTitle">
+                                {{$route.meta.title}}
+                            </BreadcrumbItem>
                         </Breadcrumb>
                         </span>
                     </div>
                     <!--头部右边-->
                     <div class="header_right flexR">
                         <span>
-                            <Icon :type="isMaxWindow?'md-contract':'md-expand'" @click="maxWindow" size="18"/>
+                            <Icon :type="isMaxWindow ? 'md-contract' : 'md-expand'" @click="maxWindow" size="18"/>
                         </span>
                         <span>
                             <Dropdown trigger="click">
@@ -127,8 +153,9 @@
                     <div class="left flexR" id="tabsNav">
                         <div class="flexR" id="tabsDiv" :style="{transform:transform}">
                             <div class="pointer flexR" v-for="(item,index) in tagsViews" :key="item+index">
-                                <span :class="activeName === item.name?'active':''" @click="tabNav(item.name)" >{{item.meta.title}}</span>
-                                <Icon v-if="item.name !== $indexPage" type="ios-close" size="24" @click="tabNavClose(item,index)"/>
+                                <span :class="activeName === item.name?'active':''" @click="tabNav(item.name)">{{item.meta.title}}</span>
+                                <Icon v-if="item.name !== $indexPage" type="ios-close" size="24"
+                                      @click="tabNavClose(item,index)"/>
                                 <!--<Dropdown trigger="contextMenu" style="margin-left: 5px" @on-click="tabRightClick" @on-visible-change="tabRightStatus($event,item.name)">
                                     <a href="javascript:void(0)">
                                         <Icon type="ios-close" size="24" @click="tabNavClose(item,index)"/>
@@ -162,10 +189,12 @@
                     </div>
                 </div>
                 <!--内容区-->
-                <Content id="main_content"
-                    :style="{height: (!isTabsShow?'calc(100vh - 64px)':'calc(100vh - 108px)'), margin: (!isTabsShow ? '24px 0 24px 24px':'0 0 24px 24px') }"
-                    class="main_content flexC">
-                    <router-view v-if="isRouterViewShow"></router-view>
+                <Content ref="main_content"
+                         :style="{height: (!isTabsShow?'calc(100vh - 64px)':'calc(100vh - 108px)'), margin: (!isTabsShow ? '24px 0 24px 24px':'0 0 24px 24px') }"
+                         class="main_content flexC">
+                    <keep-alive :include="cacheList">
+                        <router-view v-if="isRouterViewShow"></router-view>
+                    </keep-alive>
                     <Footer></Footer>
                 </Content>
                 <Drawer v-model="optionDrawer" class="optionDrawer">
@@ -197,12 +226,14 @@
     import message from "../message/message"
     import darkImg from '@/assets/main/logo-dark.png'
     import lightImg from '@/assets/main/logo-light.png'
+    import logoSmall from '@/assets/main/logo-small.png'
     import {themeData} from '@/config/config'
     import Footer from "@/components/footer/footer"
-    import { mapGetters } from 'vuex'
+    import {mapGetters} from 'vuex'
+
     export default {
         name: "main-page",
-        components: {message,Footer},
+        components: {message, Footer},
         computed: {
             ...mapGetters([
                 'routes',
@@ -213,20 +244,16 @@
             getRouterArrVuex() {
                 return this.tagsViews
             },
-            // 收缩的图标
-            rotateIcon() {
-                return [
-                    'menu-icon',
-                    this.isCollapsed ? 'rotate-icon' : ''
-                ];
-            },
             // 导航收缩
             menuitemClasses() {
                 return [
                     'menu-item',
                     this.isCollapsed ? 'collapsed-menu' : ''
                 ]
-            }
+            },
+            cacheList () {
+                return [...this.tagsViews.length ? this.tagsViews.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
+            },
         },
         data() {
             return {
@@ -240,6 +267,7 @@
                 optionDrawer: false, // 是否显示配置抽屉
                 themeType: themeData.themeType ? themeData.themeType : 'dark', // 主题风格
                 logoImg: themeData.themeType === 'dark' ? lightImg : darkImg, // 主题logo图片
+                logoSmall: logoSmall,
                 isTabsShow: themeData.isTabsShow, // 是否显示多页签
                 headMaxWidthLogoImg: darkImg, // 栏目是否通顶logo图片
                 headMaxWidth: themeData.headMaxWidth, // 栏目是否通顶（最大宽度）
@@ -258,24 +286,28 @@
                 )
             }
             this.activeName = this.$route.name
-            this.openNames = []
-            this.openNames.push(this.$route.meta.fuName)
+            this.updateOpenName(this.activeName)
             this.$nextTick(() => {
                 // 重新渲染导航
                 if (this.$refs.side_menu) {
                     this.$refs.side_menu.updateOpened()
-                    // this.$refs.side_menu.updateActiveName()
                 }
             })
         },
         methods: {
+            getOpenNamesByActiveName (name) {
+                return this.$route.matched.map(item => item.name).filter(item => item !== name)
+            },
+            updateOpenName (name) {
+                this.openNames = this.getOpenNamesByActiveName(name)
+            },
+
             // 收缩切换
             collapsedSider() {
                 this.$refs.side1.toggleCollapse();
                 this.$nextTick(() => {
                     // 重新渲染导航
                     this.$refs.side_menu.updateOpened()
-                    this.$refs.side_menu.updateActiveName()
                 })
             },
             // 处理路由数据 包含路由角色权限
@@ -286,10 +318,6 @@
             // 导航跳转
             menuNav(name) {
                 this.routerPush(name)
-            },
-            // 父级栏目展开收缩事件
-            open(name) {
-                this.openNames = ['' + name + '']
             },
             // 下拉菜单跳转
             dropdownNav(name) {
@@ -425,13 +453,12 @@
             // 监听路由跳转
             $route() {
                 this.activeName = this.$route.name
-                this.openNames = []
-                this.openNames.push(this.$route.meta.fuName)
+                this.updateOpenName(this.activeName)
                 this.$nextTick(() => {
                     this.$refs.side_menu.updateOpened()
-                    this.$refs.side_menu.updateActiveName()
                 })
             },
+
             // 监听路由数组改变
             getRouterArrVuex(val) {
                 if (val.length < 1) {
@@ -440,18 +467,18 @@
                     })
                 }
                 // 动态监听路由变化 自动滚动多页签导航
-                this.$nextTick(()=>{
-                  // 修复退出登录 页面报错
-                  if(document.getElementById('tabsNav')) {
-                    let zw = document.getElementById('tabsNav').offsetWidth // 总宽度
-                    let w = document.getElementById('tabsDiv').offsetWidth // 导航宽度
-                    if (w > zw) {
-                      let s = -(w - zw)
-                      this.transform = 'translateX(' + s + 'px)'
-                    } else {
-                      this.tabLeft()
+                this.$nextTick(() => {
+                    // 修复退出登录 页面报错
+                    if (document.getElementById('tabsNav')) {
+                        let zw = document.getElementById('tabsNav').offsetWidth // 总宽度
+                        let w = document.getElementById('tabsDiv').offsetWidth // 导航宽度
+                        if (w > zw) {
+                            let s = -(w - zw)
+                            this.transform = 'translateX(' + s + 'px)'
+                        } else {
+                            this.tabLeft()
+                        }
                     }
-                  }
                 })
             }
         },
