@@ -4,6 +4,8 @@ export const siteTitle = 'iview-admin-pro-template 中台前端模板'
 export const indexPage = 'master_workplace'
 // 默认登录页
 export const loginPage = 'login'
+// token键
+export const token = 'Authorization'
 
 // 主题风格
 export const themeData = {
