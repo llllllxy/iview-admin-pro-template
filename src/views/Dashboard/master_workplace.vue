@@ -1,8 +1,3 @@
-/**
-*   @description 主控台
-*   @author Xiaohui Zeng
-*   @date 2019/10/5
-*/
 <template>
     <div class="master_workplace-page flexC">
         <div class="fourDIv flexR">

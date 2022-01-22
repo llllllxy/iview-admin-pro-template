@@ -1,8 +1,3 @@
-/**
-*   @description 工作台
-*   @author Xiaohui Zeng
-*   @date 2019/10/7
-*/
 <template>
     <div class="workplace-page flexC">
         <div class="head flexC">
