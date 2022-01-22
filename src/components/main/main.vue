@@ -101,12 +101,10 @@
                         </span>
                         <span>
                             <Breadcrumb>
-                            <BreadcrumbItem>首页</BreadcrumbItem>
-                            <BreadcrumbItem>{{$route.meta.fuTitle}}</BreadcrumbItem>
-                            <BreadcrumbItem v-if="$route.meta.title !== $route.meta.fuTitle">
-                                {{$route.meta.title}}
-                            </BreadcrumbItem>
-                        </Breadcrumb>
+                                <BreadcrumbItem v-for="item in breadCrumbList" :to="item.to" :key="`bread-crumb-${item.name}`">
+                                    {{ item.meta.title }}
+                                </BreadcrumbItem>
+                            </Breadcrumb>
                         </span>
                     </div>
                     <!--头部右边-->
@@ -127,7 +125,7 @@
                         <span>
                             <Dropdown @on-click="personalSettings">
                             <a href="javascript:void(0)" style="color: #515A6E;">
-                                <img src="http://halo.lxyccc.top/f778738c-e4f8-4870-b634-56703b4acafe_1608734603765.gif"
+                                <img :src="userData.avatar"
                                      alt=""
                                      class="ivu-avatar ivu-avatar-small"
                                      style="margin-right: 5px">
@@ -240,7 +238,8 @@
             ...mapGetters([
                 'routes',
                 'tagsViews',
-                'userData'
+                'userData',
+                'breadCrumbList'
             ]),
             // 获取vuex 路由数据 用户tag多页签
             getRouterArrVuex() {
@@ -287,6 +286,10 @@
                     }
                 )
             }
+
+            this.$store.commit('permission/SET_HOME_ROUTE', this.routersArr)
+            this.$store.commit('permission/SET_BREAD_CRUMB', this.$route)
+
             this.activeName = this.$route.name
             this.updateOpenName(this.activeName)
             this.$nextTick(() => {
@@ -302,6 +305,9 @@
             },
             updateOpenName (name) {
                 this.openNames = this.getOpenNamesByActiveName(name)
+            },
+            getOpenTitleByActiveName (name) {
+                return this.$route.matched.map(item => item).filter(item => item !== name)
             },
 
             // 收缩切换
@@ -453,8 +459,10 @@
         },
         watch: {
             // 监听路由跳转
-            $route() {
-                this.activeName = this.$route.name
+            $route (to, from) {
+                this.$store.commit('permission/SET_BREAD_CRUMB', to)
+
+                this.activeName = to.name
                 this.updateOpenName(this.activeName)
                 this.$nextTick(() => {
                     this.$refs.side_menu.updateOpened()

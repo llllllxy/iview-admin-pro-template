@@ -13,5 +13,7 @@ const getters = {
   routes: state => state.permission.routes,
   // 异步路由
   addRoutes: state => state.permission.addRoutes,
+  // 面包屑
+  breadCrumbList: state => state.permission.breadCrumbList,
 }
 export default getters
