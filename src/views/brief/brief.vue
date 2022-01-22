@@ -1,8 +1,3 @@
-/**
-*   @description 简叙单页面
-*   @author Xiaohui Zeng
-*   @date 2019/10/6
-*/
 <template>
     <div class="brief-page flexC">
         <div class="pageContent flexC">
