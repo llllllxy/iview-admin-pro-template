@@ -1,13 +1,13 @@
 <template>
     <div class="login-page">
-        <div class="container demo-2">
+        <div class="demo-2">
             <div class="content">
                 <div id="large-header" class="large-header">
                     <canvas id="demo-canvas"></canvas>
                     <div class="login-div flexC">
                         <div class="logo flexC">
                             <img src="../../assets/main/logo-dark.png" alt="">
-                            <span>{{siteTitle}}</span>
+                            <span style="margin-top: 10px">{{siteTitle}}</span>
                         </div>
                         <Form v-if="isLogin" ref="formValidate1" class="login-from" :model="loginJson" :rules="loginCheck">
                             <FormItem prop="userName">
