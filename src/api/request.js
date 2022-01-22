@@ -1,5 +1,6 @@
 import axios from 'axios'
-import {Message} from 'view-design';
+import { Message } from 'view-design';
+import { token } from '@/config/config'
 
 // 创建一个axios实例
 const service = axios.create({
@@ -12,10 +13,9 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use(config => {
-        const token = sessionStorage.getItem('userToken');
         // 判断是否存在token，如果存在的话，则每个http header都加上token
-        if (token) {
-            config.headers['accessToken'] = token
+        if (sessionStorage.getItem(token)) {
+            config.headers[token] = sessionStorage.getItem(token)
         }
         return config
     },
@@ -25,7 +25,7 @@ service.interceptors.request.use(config => {
     }
 )
 
-// 响应拦截器
+// 响应拦截器（在这里要做判断，看看登陆是否超时等）
 service.interceptors.response.use(response => {
         const res = response.data
 
@@ -37,7 +37,6 @@ service.interceptors.response.use(response => {
         }
     },
     error => {
-        // debug
         console.log('err' + error)
         Message.error(res.msg || 'Error')
         return Promise.reject(error)
