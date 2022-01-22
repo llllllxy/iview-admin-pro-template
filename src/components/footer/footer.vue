@@ -1,18 +1,12 @@
-/**
-*   @description 统一版权页脚
-*   @author Xiaohui Zeng
-*   @date 2019/10/7
-*/
 <template>
     <div class="footer_components flexC">
         <div class="flexR">
-            <span><a href="https://githup.zengxiaohui.com/Hui-Admin-Pro" target="_blank">官网</a></span>
-            <span><a href="https://gitee.com/zengxiaohui2019/Hui-Admin-Pro" target="_blank">码云</a></span>
-            <span><a href="https://github.com/zengxiaohui2019/Hui-Admin-Pro" target="_blank">GitHub</a></span>
-            <span>专业版</span>
+            <span><a href="https://gitee.com/leisureLXY/iview-admin-pro-template" target="_blank">官网</a></span>
+            <span><a href="https://gitee.com/leisureLXY/iview-admin-pro-template" target="_blank">码云</a></span>
+            <span><a href="https://gitee.com/leisureLXY/iview-admin-pro-template" target="_blank">GitHub</a></span>
         </div>
         <div class="flexR">
-            <span>Copyright © {{year}} 曾小晖个人设计</span>
+            <span>Copyright © {{year}} liuxingyu01个人设计</span>
         </div>
     </div>
 
