@@ -1,8 +1,3 @@
-/**
-*   @description 城市选择
-*   @author Xiaohui Zeng
-*   @date 2019/10/29
-*/
 <template>
     <div class="city-page flexC">
         <div class="pageHead flexC">
