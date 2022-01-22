@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from "@/components/main/main";
+import ParentView from "@/components/parent-view/parent-view";
 
 Vue.use(Router)
 
@@ -353,6 +354,35 @@ export const asyncRoutes = [
                     icon: 'ios-create-outline'
                 },
                 component: () => import("@/views/city/city")
+            },
+            {
+                path: "/menu/three",
+                name: "three_menu",
+                meta: {
+                    hide: false,
+                    title: "三级菜单"
+                },
+                component: ParentView,
+                children: [
+                    {
+                        path: "three_menu1",
+                        name: "three_menu1",
+                        meta: {
+                            hide: false,
+                            title: "三级菜单-1"
+                        },
+                        component: () => import("@/views/city/city")
+                    },
+                    {
+                        path: "three_menu2",
+                        name: "three_menu2",
+                        meta: {
+                            hide: false,
+                            title: "三级菜单-2"
+                        },
+                        component: () => import("@/views/city/city")
+                    },
+                ]
             }
         ]
     }
