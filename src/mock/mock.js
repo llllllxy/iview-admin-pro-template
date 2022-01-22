@@ -5,6 +5,7 @@ let userData = [
     {
         userId: 'admin',
         userName: '管理员',
+        avatar: 'http://halo.lxyccc.top/f778738c-e4f8-4870-b634-56703b4acafe_1608734603765.gif',
         password: '123456',
         email: 'f123456@qq.com',
         address: '山东省 济南市 高新区',
