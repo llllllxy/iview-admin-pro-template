@@ -153,8 +153,10 @@
                     <div class="left flexR" id="tabsNav">
                         <div class="flexR" id="tabsDiv" :style="{transform:transform}">
                             <div class="pointer flexR" v-for="(item,index) in tagsViews" :key="item+index">
-                                <span :class="activeName === item.name?'active':''" @click="tabNav(item.name)">{{item.meta.title}}</span>
-                                <Icon v-if="item.name !== $indexPage" type="ios-close" size="24"
+                                <span :class="activeName === item.name ? 'active' : '' " @click="tabNav(item.name)">
+                                    {{item.meta.title}}
+                                </span>
+                                <Icon v-if="item.name !== $indexPage" type="ios-close" size="24" class="icon-close"
                                       @click="tabNavClose(item,index)"/>
                                 <!--<Dropdown trigger="contextMenu" style="margin-left: 5px" @on-click="tabRightClick" @on-visible-change="tabRightStatus($event,item.name)">
                                     <a href="javascript:void(0)">
