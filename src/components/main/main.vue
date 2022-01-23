@@ -25,32 +25,32 @@
                     :open-names="openNames"
                     accordion
                     ref="side_menu"
-                    @on-select="menuNav">
+                    @on-select="menuNav" v-show="!isCollapsed">
 
-                    <template v-for="(item,index) in routersArr">
+                    <template v-for="(item,index) in routersArr" >
 
-                        <Submenu v-if="!isCollapsed && !item.meta.hide && !item.meta.singlePage"
+                        <Submenu v-if="!item.meta.hide && !item.meta.singlePage"
                                  :name="item.name">
-                            <template slot="title" v-if="!isCollapsed">
+                            <template slot="title">
                                 <Icon :type="item.meta.icon"/>
                                 <span class="titlespan">{{item.meta.title}}</span>
                             </template>
 
                             <template v-for="it in item.children">
                                 <!--三级菜单的处理-->
-                                <Submenu v-if="!isCollapsed && it.children" :name="it.name">
-                                    <template slot="title" v-if="!isCollapsed">
+                                <Submenu v-if="it.children" :name="it.name">
+                                    <template slot="title">
                                         <span class="titlespan">{{it.meta.title}}</span>
                                     </template>
 
-                                    <menu-item v-if="!isCollapsed && !node.meta.hide"
+                                    <menu-item v-if="!node.meta.hide"
                                                v-for="node in it.children"
                                                :name="node.name">
                                         <span style="margin-left: 15%">{{node.meta.title}}</span>
                                     </menu-item>
                                 </Submenu>
 
-                                <menu-item v-if="!isCollapsed &&!it.children && !it.meta.hide"
+                                <menu-item v-if="!it.children && !it.meta.hide"
                                            :key="it.name"
                                            :name="it.name">
                                     <span>{{it.meta.title}}</span>
@@ -59,7 +59,7 @@
                         </Submenu>
 
                         <!--如果只有一个子路由-->
-                        <menu-item v-else-if="!isCollapsed && !item.meta.hide && item.meta.singlePage"
+                        <menu-item v-else-if="!item.meta.hide && item.meta.singlePage"
                                    v-for="it in item.children" :key="index" class="ivu-menu-submenu"
                                    :class="{ 'liActive': $route.name === it.name}" style="padding: 0!important;"
                                    :name="it.name">
@@ -70,21 +70,22 @@
                         </menu-item>
 
                     </template>
+                </Menu>
 
-                    <Dropdown v-for="(item,ind) in routersArr" :key="ind" v-if="isCollapsed && !item.meta.hide"
-                              class="menuSmall" @on-click="dropdownNav">
-                            <span :class="item.name === $route.meta.fuName?'active':''">
+                <Dropdown v-for="(item,ind) in routersArr" :key="ind" v-show="isCollapsed && !item.meta.hide"
+                          class="menuSmall" @on-click="dropdownNav">
+                            <span :class="item.name === openNames[0]?'active':''">
                                 <Icon :type="item.meta.icon"/>
                             </span>
-                        <DropdownMenu slot="list">
-                            <DropdownItem v-for="it in item.children" v-if="!it.meta.hide" :key="it.name"
-                                          :name="it.name"
-                                          :selected="it.name === activeName">
-                                {{it.meta.title}}
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                </Menu>
+                    <DropdownMenu slot="list">
+                        <DropdownItem v-for="it in item.children" v-if="!it.meta.hide" :key="it.name"
+                                      :name="it.name"
+                                      :selected="it.name === activeName">
+                            {{it.meta.title}}
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+
             </Sider>
             <Layout>
                 <!--头部-->

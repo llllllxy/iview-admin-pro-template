@@ -70,7 +70,6 @@
     }
 
     /*导航切换*/
-
     .tabsNav {
       background: #f5f7f9;
       padding: 6px 0;
@@ -167,7 +166,6 @@
       }
 
       /*默认 打开*/
-
       .menu-item {
         height: calc(100vh - 70px);
         overflow-y: auto;
@@ -227,6 +225,7 @@
         }
       }
     }
+
     /*白色主题风格*/
     .themeLight{
       background: #fff;
@@ -267,13 +266,17 @@
         }
         /*单页面 e*/
       }
+
       /*收起*/
-      .collapsed-menu{
+      .collapsed-menu {
         align-content: flex-start;
-        &>.menuSmall{
-          width: 100%;
-        }
-        .menuSmall > div:first-child{
+      }
+
+      .menuSmall {
+        width: 100%;
+        position: relative;
+
+        & > div:first-child{
           background: #fff;
           i {
             color: #565F73;
@@ -296,7 +299,8 @@
             }
           }
         }
-        .menuSmall > div:last-child {
+
+        & > div:last-child {
           background: #fff;
           left: 79px !important;
           width: 160px;
@@ -323,6 +327,7 @@
         }
       }
     }
+
     /*收起 默认*/
     .collapsed-menu {
       display: flex;
@@ -337,71 +342,71 @@
       &::-webkit-scrollbar {
         display: none; /* Chrome Safari */
       }
-      .menuSmall {
-        position: relative;
-        width: 100%;
-        & > div:first-child {
-          span {
-            width: 100%;
-            height: 52px;
-            padding: 14px 24px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            i {
-              color: #BABBBD;
-            }
-          }
-
-          .active {
-            background-color: #2e93f8;
-
-            i {
-              color: #fff;
-            }
-          }
-        }
-
-        /*下拉菜单弹出层*/
-
-        & > div:last-child {
-          left: 79px !important;
-          top: 10px !important;
-          background-color: #191A23;
-          ul {
-            min-width: 160px;
-            li {
-              text-align: left;
-              color: #BABBBD;
-              width: 100%;
-            }
-          }
-          .ivu-dropdown-item-selected {
-            background-color: #2D8CF0;
-            color: white;
-
-            &:hover {
-              background-color: #2D8CF0 !important;
-            }
-          }
-
-          .ivu-dropdown-item:hover {
-            background-color: #191A23;
-            color: white;
-          }
-        }
-        .ivu-select-dropdown{
-          min-width: 160px;
-        }
-      }
-
       .ivu-menu-opened {
         i {
           color: white !important;
         }
       }
     }
+
+
+    /*收起Dropdown样式-默认*/
+    .menuSmall {
+      position: relative;
+      width: 100%;
+      & > div:first-child {
+        span {
+          width: 100%;
+          height: 52px;
+          padding: 14px 24px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          i {
+            color: #BABBBD;
+          }
+        }
+        .active {
+          background-color: #2e93f8;
+
+          i {
+            color: #fff;
+          }
+        }
+      }
+      /*下拉菜单弹出层*/
+      & > div:last-child {
+        left: 79px !important;
+        top: 10px !important;
+        background-color: #191A23;
+        ul {
+          min-width: 160px;
+          li {
+            text-align: left;
+            color: #BABBBD;
+            width: 100%;
+          }
+        }
+        .ivu-dropdown-item-selected {
+          background-color: #2D8CF0;
+          color: white;
+
+          &:hover {
+            background-color: #2D8CF0 !important;
+          }
+        }
+
+        .ivu-dropdown-item:hover {
+          background-color: #191A23;
+          color: white;
+        }
+      }
+      .ivu-select-dropdown{
+        min-width: 160px;
+      }
+    }
+
+
     /*内容区*/
     .main_content{
       background-color: #f5f7f9;
@@ -416,6 +421,7 @@
     }
   }
 }
+
 /*主题风格设置*/
 .optionDrawer{
   .ivu-drawer-header{
@@ -499,3 +505,6 @@
     color: #fff;
   }
 }
+
+
+
