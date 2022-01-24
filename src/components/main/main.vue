@@ -10,7 +10,6 @@
                 v-model="isCollapsed"
                 :class="themeType === 'light' ? 'themeLight' : 'themeDark'">
 
-                <!--:class="isCollapsed?'collapsed_left':''"-->
                 <div class="logo" :class="headMaxWidth ? 'headMaxWidth' : ''">
                     <img v-if="!isCollapsed && headMaxWidth" :src="headMaxWidthLogoImg" alt="">
                     <img v-if="!isCollapsed && !headMaxWidth" :src="logoImg" alt="">
@@ -37,7 +36,7 @@
                             </template>
 
                             <template v-for="it in item.children">
-                                <!--三级菜单的处理-->
+                                <!--三级菜单的处理，目前没用递归的形式，考虑到需求最多也就三级菜单，所以先这么简单处理，后续有需要再进行改造-->
                                 <Submenu v-if="it.children" :name="it.name">
                                     <template slot="title">
                                         <span class="titlespan">{{it.meta.title}}</span>
@@ -45,13 +44,13 @@
 
                                     <menu-item v-if="!node.meta.hide"
                                                v-for="node in it.children"
-                                               :name="node.name">
+                                               :name="node.name"
+                                               :key="node.name">
                                         <span style="margin-left: 15%">{{node.meta.title}}</span>
                                     </menu-item>
                                 </Submenu>
 
                                 <menu-item v-if="!it.children && !it.meta.hide"
-                                           :key="it.name"
                                            :name="it.name">
                                     <span>{{it.meta.title}}</span>
                                 </menu-item>
@@ -78,7 +77,7 @@
                                 <Icon :type="item.meta.icon"/>
                             </span>
                     <DropdownMenu slot="list">
-                        <DropdownItem v-for="it in item.children" v-if="!it.meta.hide" :key="it.name"
+                        <DropdownItem v-if="!it.meta.hide" v-for="it in item.children" :key="it.name"
                                       :name="it.name"
                                       :selected="it.name === activeName">
                             {{it.meta.title}}
@@ -133,8 +132,8 @@
                                 {{userData.userName}}
                             </a>
                             <DropdownMenu slot="list">
-                                <DropdownItem name="grzx">个人中心</DropdownItem>
-                                <DropdownItem name="sz">设置</DropdownItem>
+                                <DropdownItem name="userCenter">个人中心</DropdownItem>
+                                <DropdownItem name="setting">设置</DropdownItem>
                                 <DropdownItem name="logout" divided>退出登陆</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
@@ -144,35 +143,24 @@
                         </span>
                     </div>
                 </Header>
-                <!--多页标签-->
+
+                <!--多页标签tagViews-->
                 <div v-if="isTabsShow" class="tabsNav flexR">
-                    <div class="xiala pointer" v-if="tabSwitch" @click="tabLeft">
+                    <div class="xiala pointer" v-if="tabSwitch" @click="handleScroll(240)">
                         <Icon type="ios-arrow-back" size="16"/>
                     </div>
-                    <div class="left flexR" id="tabsNav">
-                        <div class="flexR" id="tabsDiv" :style="{transform:transform}">
-                            <div class="pointer flexR" v-for="(item,index) in tagsViews" :key="item+index">
+                    <div class="left flexR" id="tabsNav" ref="tabsNav" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll">
+                        <div class="flexR" id="tabsDiv" ref="tabsDiv" :style="{transform : 'translateX(' + transform + 'px)'}">
+                            <div class="pointer flexR" v-for="(item,index) in tagsViews" :key="item+index" ref="tagsViewsOpened" :data-route-item="item.name">
                                 <span :class="activeName === item.name ? 'active' : '' " @click="tabNav(item.name)">
                                     {{item.meta.title}}
                                 </span>
                                 <Icon v-if="item.name !== $indexPage" type="ios-close" size="24" class="icon-close"
                                       @click="tabNavClose(item,index)"/>
-                                <!--<Dropdown trigger="contextMenu" style="margin-left: 5px" @on-click="tabRightClick" @on-visible-change="tabRightStatus($event,item.name)">
-                                    <a href="javascript:void(0)">
-                                        <Icon type="ios-close" size="24" @click="tabNavClose(item,index)"/>
-                                    </a>
-                                    <DropdownMenu slot="list" v-if="item.meta.status">
-                                        <DropdownItem :name="item.name+'/qt'">关闭其他</DropdownItem>
-                                        <DropdownItem :name="item.name+'/left'">关闭左侧</DropdownItem>
-                                        <DropdownItem :name="item.name+'/right'">关闭右侧</DropdownItem>
-                                        <DropdownItem :name="item.name+'/qb'">全部关闭</DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>-->
                             </div>
                         </div>
-
                     </div>
-                    <div class="xiala pointer" v-if="tabSwitch" @click="tabRight">
+                    <div class="xiala pointer" v-if="tabSwitch" @click="handleScroll(-240)">
                         <Icon type="ios-arrow-forward" size="16"/>
                     </div>
                     <div class="right">
@@ -181,14 +169,15 @@
                                 <Icon type="ios-arrow-down"/>
                             </div>
                             <DropdownMenu slot="list">
-                                <DropdownItem name="qt">关闭其他</DropdownItem>
-                                <!--                                <DropdownItem name="left">关闭左侧</DropdownItem>-->
-                                <!--                                <DropdownItem name="right">关闭右侧</DropdownItem>-->
-                                <DropdownItem name="qb">全部关闭</DropdownItem>
+                                <DropdownItem name="other">关闭其他</DropdownItem>
+                                <!-- <DropdownItem name="left">关闭左侧</DropdownItem> -->
+                                <!-- <DropdownItem name="right">关闭右侧</DropdownItem> -->
+                                <DropdownItem name="all">关闭全部</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </div>
                 </div>
+
                 <!--内容区-->
                 <Content ref="main_content"
                          :style="{height: (!isTabsShow?'calc(100vh - 64px)':'calc(100vh - 108px)'), margin: (!isTabsShow ? '24px 0 24px 24px':'0 0 24px 24px') }"
@@ -242,8 +231,8 @@
                 'userData',
                 'breadCrumbList'
             ]),
-            // 获取vuex 路由数据 用户tag多页签
-            getRouterArrVuex() {
+            // 获取vuex 用户tag多页签
+            getTagsViewsVuex() {
                 return this.tagsViews
             },
             // 导航收缩
@@ -277,7 +266,8 @@
             }
         },
         created() {
-            this.setRouterArr()
+            // 获取路由数据
+            this.routersArr = JSON.parse(JSON.stringify(this.routes))
         },
         mounted() {
             // 如果没有权限 回到默认首页 防止错误地址程序崩溃 跳转非法路由
@@ -287,7 +277,7 @@
                     }
                 )
             }
-
+            // 初始化面包屑数据
             this.$store.commit('permission/SET_HOME_ROUTE', this.routersArr)
             this.$store.commit('permission/SET_BREAD_CRUMB', this.$route)
 
@@ -307,9 +297,6 @@
             updateOpenName (name) {
                 this.openNames = this.getOpenNamesByActiveName(name)
             },
-            getOpenTitleByActiveName (name) {
-                return this.$route.matched.map(item => item).filter(item => item !== name)
-            },
 
             // 收缩切换
             collapsedSider() {
@@ -318,11 +305,6 @@
                     // 重新渲染导航
                     this.$refs.side_menu.updateOpened()
                 })
-            },
-            // 处理路由数据 包含路由角色权限
-            setRouterArr() {
-                // 获取路由数据
-                this.routersArr = JSON.parse(JSON.stringify(this.routes))
             },
             // 导航跳转
             menuNav(name) {
@@ -342,9 +324,11 @@
                     name: name
                 })
                 this.$nextTick(() => {
-                    let w = document.getElementById('tabsDiv').offsetWidth
-                    let zw = document.getElementById('tabsNav').offsetWidth
+                    let w = this.$refs.tabsDiv.offsetWidth
+                    let zw = this.$refs.tabsNav.offsetWidth
+
                     if (w > zw) {
+                        // tagViews显示左右切换图标
                         this.tabSwitch = true
                     }
                 })
@@ -352,18 +336,23 @@
             // tab关闭
             tabNavClose(item, index) {
                 let arr = this.tagsViews
-                // 判断是否是首页
+                // 判断是否是首页（首页禁止关闭）
                 if (item.name !== this.$indexPage) {
                     this.$store.dispatch('tagsView/delTagsView', index)
                     if (index !== 0) {
-                        this.$router.push({
-                            name: arr[index - 1].name
-                        })
+                        // 如果关闭的是当前标签，则跳转到当前标签的上一个标签
+                        if (this.activeName === item.name) {
+                            this.$router.push({
+                                name: arr[index - 1].name
+                            })
+                        } else {
+                            // 否则直接关掉就行了，无需处理呀
+                        }
                     }
                 }
                 this.$nextTick(() => {
-                    let w = document.getElementById('tabsDiv').offsetWidth
-                    let zw = document.getElementById('tabsNav').offsetWidth
+                    let w = this.$refs.tabsDiv.offsetWidth
+                    let zw = this.$refs.tabsNav.offsetWidth
                     if (w < zw) {
                         this.tabSwitch = false
                     }
@@ -374,14 +363,14 @@
                 let arr = this.tagsViews
                 this.tabSwitch = false
                 switch (type) {
-                    case 'qt':
+                    case 'other': // 关闭其他，下标为0的不能删除，因为是'首页'
                         for (let i = arr.length - 1; i > 0; i--) {
                             if (arr[i].name !== this.activeName) {
                                 this.$store.dispatch('tagsView/delTagsView', i)
                             }
                         }
                         break
-                    case 'qb':
+                    case 'all': // 关闭全部，下标为0的不能删除，因为是'首页'
                         for (let i = arr.length - 1; i > 0; i--) {
                             this.$store.dispatch('tagsView/delTagsView', i)
                         }
@@ -416,19 +405,6 @@
                     this.isMaxWindow = true
                 }
             },
-            // 向左切换
-            tabLeft() {
-                this.transform = 'translateX(0px)'
-            },
-            // 向右切换
-            tabRight() {
-                let w = document.getElementById('tabsDiv').offsetWidth
-                let zw = document.getElementById('tabsNav').offsetWidth
-                if (w > zw) {
-                    let s = -(w - zw)
-                    this.transform = 'translateX(' + s + 'px)'
-                }
-            },
             // 主题切换
             themeSwitch(type) {
                 if (type === 0) {
@@ -450,13 +426,47 @@
             },
             // 个人设置功能
             async personalSettings(name) {
+                // 退出登录
                 if (name === 'logout') {
                     await this.$store.dispatch('user/logout')
                     this.$router.push({
                         name: this.$loginPage
                     })
                 }
-            }
+                // 个人中心
+                if (name === 'userCenter') {
+                    this.$Message.info('个人中心页面待开发')
+                }
+                // 设置页面
+                if (name === 'setting') {
+                    this.$Message.info('设置页面待开发')
+                }
+            },
+            handlescroll (e) {
+                var type = e.type
+                let delta = 0
+                if (type === 'DOMMouseScroll' || type === 'mousewheel') {
+                    delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
+                }
+                this.handleScroll(delta)
+            },
+            handleScroll (offset) {
+                const outerWidth = this.$refs.tabsNav.offsetWidth
+                const bodyWidth = this.$refs.tabsDiv.offsetWidth
+                if (offset > 0) {
+                    this.transform = Math.min(0, this.transform + offset)
+                } else {
+                    if (outerWidth < bodyWidth) {
+                        if (this.transform < -(bodyWidth - outerWidth)) {
+                            this.transform = this.transform
+                        } else {
+                            this.transform = Math.max(this.transform + offset, outerWidth - bodyWidth)
+                        }
+                    } else {
+                        this.transform = 0
+                    }
+                }
+            },
         },
         watch: {
             // 监听路由跳转
@@ -470,8 +480,8 @@
                 })
             },
 
-            // 监听路由数组改变
-            getRouterArrVuex(val) {
+            // 监听TagsViews数组内容改变
+            getTagsViewsVuex(val) {
                 if (val.length < 1) {
                     this.$router.push({
                         name: this.$indexPage
@@ -480,14 +490,14 @@
                 // 动态监听路由变化 自动滚动多页签导航
                 this.$nextTick(() => {
                     // 修复退出登录 页面报错
-                    if (document.getElementById('tabsNav')) {
-                        let zw = document.getElementById('tabsNav').offsetWidth // 总宽度
-                        let w = document.getElementById('tabsDiv').offsetWidth // 导航宽度
+                    if (this.$refs.tabsDiv) {
+                        let w = this.$refs.tabsDiv.offsetWidth // 导航宽度
+                        let zw = this.$refs.tabsNav.offsetWidth // 总宽度
                         if (w > zw) {
                             let s = -(w - zw)
-                            this.transform = 'translateX(' + s + 'px)'
+                            this.transform = s
                         } else {
-                            this.tabLeft()
+                            this.transform = 0
                         }
                     }
                 })
