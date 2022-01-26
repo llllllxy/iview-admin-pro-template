@@ -38,7 +38,11 @@ router.beforeEach(async (to, from, next) => {
                     const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
                     // 增加异步路由
-                    router.addRoutes(accessRoutes)
+                    // router.addRoutes(accessRoutes)
+                    // VueRouter@3.5.0+ New API，新版本VueRouter使用addRoutes控制台会报警告，提示更换为addRoute
+                    accessRoutes.forEach(r => {
+                        router.addRoute(r)
+                    })
 
                     // hack方法，以确保addRoutes是完整的，设置replace：true，导航不会留下历史记录
                     next({...to, replace: true})
