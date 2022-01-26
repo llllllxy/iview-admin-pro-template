@@ -10,6 +10,7 @@ module.exports = {
     productionSourceMap: false,// 打包时不生成.map文件
     // 这里写你调用接口的基础路径，来解决跨域
     devServer: {
+        port: 9084,
         open: true,
         proxy: {
             '/dev-api': {
