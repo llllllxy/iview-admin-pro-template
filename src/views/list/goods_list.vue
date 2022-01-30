@@ -1,8 +1,3 @@
-/**
-*   @description 商品列表
-*   @author Xiaohui Zeng
-*   @date 2019/11/10
-*/
 <template>
     <div class="goods_list-page flexC">
         <div class="pageHead flexC">
@@ -11,7 +6,7 @@
         </div>
         <div class="pageContent flexC">
             <div class="body flexR">
-                <div class="item hui-box-shadow flexC" v-for="(item,index) in dataList" :key="item.id+index">
+                <div class="item div-box-shadow flexC" v-for="(item,index) in dataList" :key="item.id+index">
                     <a :href="item.src" class="flexC" target="_blank">
                         <div class="tag" :class="[{ 'red': item.type === 0 },{ 'green': item.type === 1 },{ 'rexiao': item.type === 2 }]">{{item.type | tagType}}</div>
                         <img :src="item.img" alt="">
