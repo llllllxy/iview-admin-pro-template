@@ -151,7 +151,7 @@
                     </div>
                     <div class="left flexR" id="tabsNav" ref="tabsNav" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll">
                         <div class="flexR" id="tabsDiv" ref="tabsDiv" :style="{transform : 'translateX(' + transform + 'px)'}">
-                            <div class="pointer flexR" v-for="(item,index) in tagsViews" :key="item+index" ref="tagsViewsOpened" :data-route-item="item.name">
+                            <div class="pointer flexR" v-for="(item,index) in tagsViews" :key="item+index" :data-route-item="item.name">
                                 <span :class="activeName === item.name ? 'active' : '' " @click="tabNav(item.name)">
                                     {{item.meta.title}}
                                 </span>
