@@ -1,8 +1,11 @@
 const path = require("path");
 const webpack = require("webpack");
+const WebpackBar = require('webpackbar');
 const resolve = (dir) => {
     return path.join(__dirname, dir);
 };
+
+
 
 module.exports = {
     publicPath: "./", // ./相对路径
@@ -18,6 +21,18 @@ module.exports = {
                 pathRewrite: { '^/dev-api': '' }
             }
         }
+    },
+    configureWebpack() {
+        return {
+            plugins: [
+                new WebpackBar({
+                    color: "green",  // 默认green，进度条颜色支持HEX
+                    basic: false,   // 默认true，启用一个简单的日志报告器
+                    profile: false,  // 默认false，启用探查器。
+                })
+            ]
+        }
+
     },
     chainWebpack: config => {
         config.resolve.alias
