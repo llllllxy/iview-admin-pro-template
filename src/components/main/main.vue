@@ -59,7 +59,7 @@
 
                         <!--如果只有一个子路由-->
                         <menu-item v-else-if="!item.meta.hide && item.meta.singlePage"
-                                   v-for="it in item.children" :key="index" class="ivu-menu-submenu"
+                                   v-for="it in item.children" :key="index + it.name" class="ivu-menu-submenu"
                                    :class="{ 'liActive': $route.name === it.name}" style="padding: 0!important;"
                                    :name="it.name">
                             <div class="ivu-menu-submenu-title">
