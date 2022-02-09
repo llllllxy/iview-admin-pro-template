@@ -1,8 +1,3 @@
-/**
-*   @description 搜索列表（文章）
-*   @author Xiaohui Zeng
-*   @date 2019/10/17
-*/
 <template>
     <div class="search_article-page flexC">
         <div class="pageHead flexC">
