@@ -2,30 +2,25 @@
     <Card>
         <p slot="title">使用qrcodejs2生成二维码</p>
         <div style="width: 256px;margin: 0 auto;">
-            <div ref="qrcodeRef"></div>
+            <!--logoSrc为logo的url地址(使用require的方式)；text为需要转换为二维码的内容-->
+            <vue-qr :logoSrc="imageUrl" :text="qrcodeText" :size="256"></vue-qr>
         </div>
     </Card>
 </template>
 <script>
-    import QRCode from 'qrcodejs2'
+    import vueQr from 'vue-qr'
+    import logoSmall from '@/assets/main/logo-small.png'
 
     export default {
         name: 'qrcode_demo',
-        data() {
-            return {}
+        components: {
+            vueQr
         },
-        mounted() {
-            const qrcodeText = '我是一个二维码'
-            const qrcode = new QRCode(this.$refs.qrcodeRef, {
-                text: qrcodeText,
-                width: 256,
-                height: 256,
-                colorDark: '#000000',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H
-            })
-            qrcode.clear()
-            qrcode.makeCode(qrcodeText)
+        data() {
+            return {
+                imageUrl: logoSmall,
+                qrcodeText: '使用qrcodejs2生成二维码'
+            }
         }
     }
 </script>
