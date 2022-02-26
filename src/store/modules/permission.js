@@ -1,36 +1,58 @@
-import { asyncRoutes, constantRoutes } from '@/router'
-import { indexPage } from '@/config/config'
+import {constantRoutes} from '@/router'
+import {indexPage} from '@/config/config'
+
+import Main from "@/components/main/main";
+import ParentView from "@/components/parent-view/parent-view";
+
 
 /**
- * 使用meta.roleId确定当前用户是否具有权限
- * @param roles
- * @param route
+ * 通过递归动态生成异步路由表
+ * @param routerMap
  */
-function hasPermission(roles, route) {
-  if (route.meta && route.meta.roleId) {
-    return roles.includes(route.meta.roleId)
-  } else {
-    return true
-  }
+const filterAsyncRoutes = (routerMap) => {
+  return routerMap.map(item => {
+    const {path, name, redirect, component, icon, singlePage, title, notCache, hide, children} = item
+
+    const currentRouter = {
+      meta: {}
+    }
+    currentRouter['path'] = path;
+    currentRouter['name'] = name;
+    currentRouter['redirect'] = redirect;
+    if (component === 'Main') {
+      currentRouter['component'] = Main
+    } else if (component === 'ParentView') {
+      currentRouter['component'] = ParentView
+    } else {
+      currentRouter['component'] = loadView(component)
+    }
+    if (icon) {
+      currentRouter['meta']['icon'] = icon
+    }
+    if (title) {
+      currentRouter['meta']['title'] = title
+    }
+    if (singlePage) {
+      currentRouter['meta']['singlePage'] = singlePage
+    }
+    if (notCache) {
+      currentRouter['meta']['notCache'] = notCache
+    } else {
+      currentRouter['meta']['notCache'] = false
+    }
+    if (hide) {
+      currentRouter['meta']['hide'] = hide
+    }
+    if (children && children instanceof Array && children.length > 0) {
+      currentRouter['children'] = filterAsyncRoutes(children)
+    }
+    return currentRouter
+  })
 }
 
-/**
- * 通过递归过滤异步路由表
- * @param routes asyncRoutes
- * @param roles
- */
-function filterAsyncRoutes(routes, roles) {
-  const res = []
-  routes.forEach(route => {
-    const tmp = { ...route } // 解决浅拷贝共享同一内存地址
-    if (hasPermission(roles, tmp)) {
-      if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
-      }
-      res.push(tmp)
-    }
-  })
-  return res
+
+const loadView = (component) => {
+  return (resolve) => require([`@/views${component}`], resolve)
 }
 
 
@@ -110,9 +132,18 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }, routeData) {
     return new Promise(resolve => {
-      const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      const accessedRoutes = filterAsyncRoutes(routeData)
+      const route404 = {
+        name: '404错误页',
+        path: '*',
+        redirect: '/404',
+        meta: {
+          hide: true
+        }
+      }
+      accessedRoutes.push(route404);
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

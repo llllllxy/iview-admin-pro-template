@@ -9,7 +9,238 @@ let userData = [
         password: '123456',
         email: 'f123456@qq.com',
         address: '山东省 济南市 高新区',
-        roles: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16] // 用户拥有的角色 数组
+        roles: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], // 用户拥有的角色 数组
+        routeData: [
+            {
+                path: "/permission",
+                name: "permission",
+                redirect: '/permission-index',
+                component: 'Main',
+                hide: false,
+                title: "权限测试",
+                icon: "ios-switch-outline",
+                singlePage: true,
+                children: [
+                    {
+                        path: "/permission-index",
+                        name: "permission-index",
+                        hide: false,
+                        title: "权限测试",
+                        component: '/permission'
+                    },
+                ]
+            },
+            {
+                path: "/form",
+                name: "form",
+                component: 'Main',
+                hide: false,
+                title: "表单页面",
+                icon: "md-cube",
+                children: [
+                    {
+                        path: "/form/basic_form",
+                        name: "basic-form",
+                        hide: false,
+                        title: "基础表单",
+                        component: '/form/basic_form'
+                    },
+                    {
+                        path: "/form/advanced_form",
+                        name: "advanced_form",
+                        hide: false,
+                        title: "高级表单",
+                        component: '/form/advanced_form'
+                    },
+                ]
+            },
+            {
+                path: "/list",
+                name: "list",
+                component: 'Main',
+                hide: false,
+                title: "列表页面",
+                icon: "md-grid",
+                children: [
+                    {
+                        path: "/list/basic_list",
+                        name: "basic_list",
+                        hide: false,
+                        title: "基础列表",
+                        component: '/list/basic_list'
+                    },
+                    {
+                        path: "/list/user_list",
+                        name: "user_list",
+                        hide: false,
+                        title: "用户列表",
+                        component: '/list/user_list'
+                    },
+                    {
+                        path: "/list/goods_list",
+                        name: "goods_list",
+                        hide: false,
+                        title: "商品列表",
+                        component: '/list/goods_list'
+                    }
+                ]
+            },
+            {
+                path: "/search",
+                name: "search",
+                component: 'Main',
+                hide: false,
+                title: "搜索页面",
+                icon: "md-search",
+                children: [
+                    {
+                        path: "/search/search_article",
+                        name: "search_article",
+                        hide: false,
+                        title: "搜索列表（文章）",
+                        component: '/search/search_article'
+                    },
+                    {
+                        path: "/search/search_projects",
+                        name: "search_projects",
+                        hide: false,
+                        title: "搜索列表（项目）",
+                        component: '/search/search_projects'
+                    }
+                ]
+            },
+            {
+                path: "/detail",
+                name: "detail",
+                component: 'Main',
+                hide: false,
+                title: "详情页面",
+                icon: "md-list-box",
+                children: [
+                    {
+                        path: "/detail/basic_detail",
+                        name: "basic_detail",
+                        hide: false,
+                        title: "基础详情",
+                        component: '/detail/basic_detail'
+                    },
+                    {
+                        path: "/detail/advanced_detail",
+                        name: "advanced_detail",
+                        hide: false,
+                        title: "高级详情",
+                        component: '/detail/advanced_detail'
+                    }
+                ]
+            },
+            {
+                path: "/result",
+                name: "result",
+                component: 'Main',
+                hide: false,
+                title: "结果页面",
+                icon: "md-checkmark-circle-outline",
+                children: [
+                    {
+                        path: "/result/result_success",
+                        name: "result_success",
+                        hide: false,
+                        title: "成功页面",
+                        component: '/result/result_success'
+                    },
+                    {
+                        path: "/result/result_fail",
+                        name: "result_fail",
+                        hide: false,
+                        title: "失败页面",
+                        component: '/result/result_fail'
+                    }
+                ]
+            },
+            {
+                path: "/setting",
+                name: "setting",
+                component: 'Main',
+                hide: false,
+                title: "设置页面",
+                icon: "md-options",
+                children: [
+                    {
+                        path: "/setting/setting_user",
+                        name: "setting_user",
+                        hide: false,
+                        title: "个人中心",
+                        component: '/setting/setting_user'
+                    },
+                    {
+                        path: "/setting/setting_account",
+                        name: "setting_account",
+                        hide: false,
+                        title: "个人设置",
+                        component: '/setting/setting_account'
+                    }
+                ]
+            },
+            {
+                path: "/editor",
+                name: "editor",
+                component: 'Main',
+                hide: false,
+                title: "编辑器",
+                icon: "ios-create-outline",
+                children: [
+                    {
+                        path: "/editor/wangEditor",
+                        name: "editor_wangEditor",
+                        hide: false,
+                        title: "wangEditor",
+                        icon: 'ios-create-outline',
+                        component: '/editor/wangEditor'
+                    }
+                ]
+            },
+            {
+                path: "/city",
+                name: "city",
+                component: 'Main',
+                hide: false,
+                title: "高级组件",
+                icon: "ios-paper-plane-outline",
+                children: [
+                    {
+                        path: "/city/city",
+                        name: "city_city",
+                        hide: false,
+                        title: "城市选择",
+                        icon: 'ios-create-outline',
+                        component: '/city/city'
+                    },
+                    {
+                        path: "/menu/three",
+                        name: "three_menu",
+                        hide: false,
+                        title: "三级菜单",
+                        component: 'ParentView',
+                        children: [
+                            {
+                                path: "three_menu1",
+                                name: "three_menu1",
+                                hide: false,
+                                title: "三级菜单-1",
+                                component: '/city/city'
+                            },
+                            {
+                                path: "three_menu2",
+                                name: "three_menu2",
+                                hide: false,
+                                title: "三级菜单-2",
+                                component: '/city/city'
+                            },
+                        ]
+                    }
+                ]
+            }
+        ]
     },
     {
         userId: 'admin1',

@@ -26,16 +26,19 @@ router.beforeEach(async (to, from, next) => {
                     name: to.name,
                     path: to.path
                 }
+
                 // 增加tab多页签数据
-                await store.dispatch('tagsView/addTagsView', item)
+                if (item.name !== 'exception_404') {// 跳转到404页时，不增加tagViews
+                    await store.dispatch('tagsView/addTagsView', item)
+                }
                 next()
             } else {
                 try {
                     // 获取用户信息 这里可以进行一些操作
-                    const {roles} = await store.dispatch('user/getInfo')
+                    const { routeData } = await store.dispatch('user/getInfo')
 
                     // 根据角色信息过滤，动态生成可访问的路由
-                    const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+                    const accessRoutes = await store.dispatch('permission/generateRoutes', routeData)
 
                     // 增加异步路由
                     // router.addRoutes(accessRoutes)
