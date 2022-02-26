@@ -216,6 +216,14 @@ let userData = [
                         component: '/city/city'
                     },
                     {
+                        path: "/qrcode/qrcode_demo",
+                        name: "qrcode_demo",
+                        hide: false,
+                        title: "二维码生成",
+                        icon: 'ios-create-outline',
+                        component: '/qrcode/qrcode_demo'
+                    },
+                    {
                         path: "/menu/three",
                         name: "three_menu",
                         hide: false,
