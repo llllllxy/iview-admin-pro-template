@@ -252,6 +252,7 @@ const getChildren = (data, result, pid) => {
 
 /**
  *  扁平数据转树结构2，一次循环性能更高
+ *  经测试在节点不按顺序的时候也可以转换成功
  * @returns {[]}
  * @param list
  * @param options
@@ -286,6 +287,40 @@ export function arrayToTree2 (list, options = {}) {
         }
     }
     return tree
+}
+
+
+/**
+ *
+ * @param arr
+ * let arr = [
+     {id: 1, name: '部门1', pid: 0},
+     {id: 2, name: '部门2', pid: 1},
+     {id: 3, name: '部门3', pid: 1},
+     {id: 4, name: '部门4', pid: 3},
+     {id: 5, name: '部门5', pid: 4}
+ ]
+ * @returns {[]}
+ */
+export function arrayToTree3(arr) {
+    let tree = [];
+    const map = {};
+    for ( let item of arr) {
+        map[item.id] = {
+            ...item,
+            children: [],
+        };
+    }
+    for ( let item of arr) {
+        let newItem = map[item.id];
+        if (map[item.pid]) {
+            let parent = map[item.pid];
+            parent.children.push(newItem);
+        } else {
+            tree.push(newItem);
+        }
+    }
+    return tree ;
 }
 
 
@@ -340,4 +375,26 @@ function toArrayDF (tree, list, pid) {
         }
     }
 }
+
+
+/**
+ * 菜单树转数组list
+ * @param tree 树结构
+ * @param arr 结果数组，默认不传
+ * @returns {*[]}
+ */
+export function treeToArray2 (tree, arr = []) {
+    tree.forEach(item => {
+        const {children, ...props} = item
+        // 添加除了children的属性
+        arr.push(props)
+        if (children) {
+            // 递归将所有节点加入到结果集中
+            treeToArray2(children, arr)
+        }
+    })
+    return arr
+}
+
+
 
