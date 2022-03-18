@@ -288,3 +288,56 @@ export function arrayToTree2 (list, options = {}) {
     return tree
 }
 
+
+/**
+ * 菜单树转数组list
+ * @params tree: 要转换的树结构数据
+ **/
+export function treeToArray(tree){
+    let list = [];  // 结果lsit
+    for (let i = 0, len = tree.length; i < len; i++) {
+        let node = tree[i];
+
+        if (node.children != null && node.children.length !== 0) {  //遍历树的第一层,只有一个根结点
+            // 第一层加入到list中,因为根结点模块设置为虚拟结点,所以不用加入
+            list.push({
+                id: node.id,
+                title: node.title,
+                pid:node.pid
+            });
+            toArrayDF(node.children, list, node.id);  //遍历子树,并加入到list中.
+        } else {
+            list.push({
+                id: node.id,
+                title: node.title,
+                pid: node.pid
+            });
+        }
+    }
+    return list;
+}
+
+
+/**
+ * 深度优先遍历树
+ * 一个递归方法
+ * @params tree:要转换的树结构数据
+ * @params list:保存结果的列表结构数据，初始传list = []
+ * @params parentId:当前遍历节点的父级节点id，初始为null(因为根节点无parentId)
+ **/
+function toArrayDF (tree, list, pid) {
+    for (let i = 0, len = tree.length; i < len; i++) { //遍历最上层
+        // 将当前树放入list中
+        let node = tree[i];
+        list.push({
+            id: node.id,
+            title: node.title,
+            pid: pid
+        });
+        // 如果有子结点,再遍历子结点
+        if (node.children != null && node.children.length !== 0) {
+            toArrayDF(node.children, list, node.id)  //递归
+        }
+    }
+}
+
