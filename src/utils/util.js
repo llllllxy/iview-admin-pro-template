@@ -196,35 +196,18 @@ export const throttle = (fn, delay) => {
 
 
 /**
- * 递归查找，获取children
- * @param data
- * @param result
- * @param pid
- */
-const getChildren = (data, result, pid) => {
-    for (const item of data) {
-        if (item.pid === pid) {
-            const newItem = {...item, children: []};
-            result.push(newItem);
-            getChildren(data, newItem.children, item.id);
-        }
-    }
-}
-
-
-/**
  * 扁平数据转树结构
  * @param data
  * let arr = [
- {id: 1, name: '部门1', pid: 0},
- {id: 2, name: '部门2', pid: 1},
- {id: 3, name: '部门3', pid: 1},
- {id: 4, name: '部门4', pid: 3},
- {id: 5, name: '部门5', pid: 4},
- ]
+     {id: 1, name: '部门1', pid: 0},
+     {id: 2, name: '部门2', pid: 1},
+     {id: 3, name: '部门3', pid: 1},
+     {id: 4, name: '部门4', pid: 3},
+     {id: 5, name: '部门5', pid: 4}
+   ]
  * @param firstPid
  * @returns [
- {
+    {
         "id": 1,
         "name": "部门1",
         "pid": 0,
@@ -252,6 +235,22 @@ export const arrayToTree = (data, firstPid) => {
 }
 
 /**
+ * 递归查找，获取children
+ * @param data
+ * @param result
+ * @param pid
+ */
+const getChildren = (data, result, pid) => {
+    for (const item of data) {
+        if (item.pid === pid) {
+            const newItem = {...item, children: []};
+            result.push(newItem);
+            getChildren(data, newItem.children, item.id);
+        }
+    }
+}
+
+/**
  *  扁平数据转树结构2，一次循环性能更高
  * @returns {[]}
  * @param list
@@ -263,37 +262,29 @@ export function arrayToTree2 (list, options = {}) {
         childField = 'children',
         parentField = 'pid'
     } = options
-
     const tree = []
     const record = {}
-
     for (let i = 0, len = list.length; i < len; i++) {
         const item = list[i]
         const id = item[keyField]
-
         if (!id) {
             continue
         }
-
         if (record[id]) {
             item[childField] = record[id]
         } else {
             item[childField] = record[id] = []
         }
-
         if (item[parentField]) {
             const parentId = item[parentField]
-
             if (!record[parentId]) {
                 record[parentId] = []
             }
-
             record[parentId].push(item)
         } else {
             tree.push(item)
         }
     }
-
     return tree
 }
 
