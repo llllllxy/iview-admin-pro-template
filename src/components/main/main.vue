@@ -266,7 +266,7 @@
             }
         },
         created() {
-            // 获取路由数据
+            // 获取路由数据(JSON.parse(JSON.stringify是为了深拷贝)
             this.routersArr = JSON.parse(JSON.stringify(this.routes))
         },
         mounted() {
