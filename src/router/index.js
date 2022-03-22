@@ -89,14 +89,16 @@ export const constantRoutes = [
             hide: true
         },
         component: () => import("@/views/exception/401")
-    }, {
+    },
+    {
         path: '/500',
         name: 'exception_500',
         meta: {
             hide: true
         },
         component: () => import("@/views/exception/500")
-    }, {
+    },
+    {
         path: '/404',
         name: 'exception_404',
         meta: {
