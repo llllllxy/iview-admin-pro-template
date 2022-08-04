@@ -17,7 +17,7 @@
     "echarts": "^4.3.0",
     "mockjs": "^1.1.0",
     "moment": "^2.24.0",
-    "view-design": "^4.4.0",
+    "view-design": "^4.7.0",
     "vue": "^2.6.11",
     "vue-qr": "^3.2.4",
     "vue-router": "^3.5.1",
