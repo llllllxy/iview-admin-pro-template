@@ -58,6 +58,7 @@ const loadView = (component) => {
 
 /**
  * @param {Array} routers 路由列表数组
+ * @param homeName 首页路由
  * @description 用于找到路由列表中name为home的对象
  */
 const getHomeRoute = (routers, homeName = 'home') => {
@@ -78,7 +79,9 @@ const getHomeRoute = (routers, homeName = 'home') => {
 
 
 /**
- * @param {Array} routeMetched 当前路由metched
+ * 获取面包屑列表
+ * @param {Array} route 当前路由metched
+ * @param {Array} homeRoute 首页路由
  * @returns {Array}
  */
 const getBreadCrumbList = (route, homeRoute) => {
