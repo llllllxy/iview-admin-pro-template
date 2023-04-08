@@ -33,7 +33,7 @@ export const constantRoutes = [
         redirect: '/master_workplace',
         component: Main,
         meta: {
-            hide: true,
+            hide: false,
             title: "Dashboard",
             icon: "md-speedometer",
         },
@@ -42,7 +42,7 @@ export const constantRoutes = [
                 path: "/master_workplace",
                 name: "master_workplace",
                 meta: {
-                    hide: true,
+                    hide: false,
                     title: "首页"
                 },
                 component: () => import("@/views/Dashboard/master_workplace")
@@ -51,9 +51,8 @@ export const constantRoutes = [
                 path: "/workplace",
                 name: "workplace",
                 meta: {
-                    hide: true,
-                    title: "工作台",
-                    permission: ['admin']
+                    hide: false,
+                    title: "工作台"
                 },
                 component: () => import("@/views/Dashboard/workplace")
             },
