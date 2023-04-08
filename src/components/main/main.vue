@@ -77,11 +77,29 @@
                                 <Icon :type="item.meta.icon"/>
                             </span>
                     <DropdownMenu slot="list">
-                        <DropdownItem v-if="!it.meta.hide" v-for="it in item.children" :key="it.name"
+
+                      <template v-for="it in item.children">
+
+                        <Dropdown placement="right-start" v-if="it.children" :name="item.name">
+                          <DropdownItem>
+                            {{it.meta.title}}
+                            <Icon type="ios-arrow-forward"></Icon>
+                          </DropdownItem>
+                          <DropdownMenu slot="list">
+                            <DropdownItem v-for="node in it.children" v-if="!node.meta.hide"
+                                          :name="node.name"
+                                          :selected="node.name === activeName">
+                              {{node.meta.title}}
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </Dropdown>
+
+                        <DropdownItem v-if="!it.children && !it.meta.hide"
                                       :name="it.name"
                                       :selected="it.name === activeName">
                             {{it.meta.title}}
                         </DropdownItem>
+                      </template>
                     </DropdownMenu>
                 </Dropdown>
 
