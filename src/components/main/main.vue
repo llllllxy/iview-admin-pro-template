@@ -86,8 +86,8 @@
                             <Icon type="ios-arrow-forward"></Icon>
                           </DropdownItem>
                           <DropdownMenu slot="list">
-                            <DropdownItem v-for="node in it.children" v-if="!node.meta.hide"
-                                          :name="node.name"
+                            <DropdownItem v-for="(node,ind) in it.children" v-if="!node.meta.hide"
+                                          :name="node.name" :key="ind"
                                           :selected="node.name === activeName">
                               {{node.meta.title}}
                             </DropdownItem>
@@ -152,7 +152,7 @@
                             <DropdownMenu slot="list">
                                 <DropdownItem name="userCenter">个人中心</DropdownItem>
                                 <DropdownItem name="setting">设置</DropdownItem>
-                                <DropdownItem name="logout" divided>退出登陆</DropdownItem>
+                                <DropdownItem name="logout" divided>退出登录</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                         </span>
