@@ -1,8 +1,3 @@
-/**
-*   @description 个人设置
-*   @author Xiaohui Zeng
-*   @date 2019/10/17
-*/
 <template>
     <div class="setting_account-page flexC">
         <div class="pageHead flexC">

@@ -1,8 +1,3 @@
-/**
-*   @description 权限测试
-*   @author Xiaohui Zeng
-*   @date 2020-05-16
-*/
 <template>
     <div class="permission-page flexC">
         <div class="pageHead flexC">

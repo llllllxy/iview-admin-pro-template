@@ -1,8 +1,3 @@
-/**
-*   @description 用户列表
-*   @author Xiaohui Zeng
-*   @date 2019/11/01
-*/
 <template>
     <div class="user_list-page flexC">
         <div class="pageHead flexC">
@@ -60,7 +55,7 @@
                         id: 1,
                         name: '曾小晖',
                         email: '1257538859@qq.com',
-                        img: 'https://www.zengxiaohui.com/vueImg/avatar.jpg',
+                        img: 'https://s11.ax1x.com/2023/12/16/pi4oTOO.jpg',
                         roles: ["test","admin"],
                         isCheck: true,
                         isEdit: false
@@ -69,7 +64,7 @@
                         id: 2,
                         name: '晖小曾',
                         email: '1257538859@qq.com',
-                        img: 'https://www.zengxiaohui.com/vueImg/avatar1.jpg',
+                        img: 'https://s11.ax1x.com/2023/12/16/pi4oTOO.jpg',
                         roles: ["ordinary"],
                         isCheck: false,
                         isEdit: false
@@ -78,7 +73,7 @@
                         id: 3,
                         name: '小曾晖',
                         email: '1257538859@qq.com',
-                        img: 'https://www.zengxiaohui.com/vueImg/avatar2.jpg',
+                        img: 'https://s11.ax1x.com/2023/12/16/pi4oTOO.jpg',
                         roles: ["admin"],
                         isCheck: true,
                         isEdit: false
@@ -87,7 +82,7 @@
                         id: 4,
                         name: '晖小晖',
                         email: '1257538859@qq.com',
-                        img: 'https://www.zengxiaohui.com/vueImg/avatar3.jpg',
+                        img: 'https://s11.ax1x.com/2023/12/16/pi4oTOO.jpg',
                         roles: ["super"],
                         isCheck: false,
                         isEdit: false

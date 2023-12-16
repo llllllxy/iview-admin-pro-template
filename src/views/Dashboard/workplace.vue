@@ -7,7 +7,7 @@
                         <Avatar :src="avatarImg" />
                     </div>
                     <div class="flexC">
-                        <span>早安，{{$store.getters.userData.userName}}，新的一天新的开始！</span>
+                        <span>早安，{{$store.getters.userData.username}}，新的一天新的开始！</span>
                         <span> <Icon type="md-rainy" />今日阴转小雨，22℃ - 32℃，出门记得带伞哦。</span>
                     </div>
                 </div>
@@ -214,7 +214,7 @@
         name: "workplace",
         data() {
             return {
-                avatarImg: 'https://githup.zengxiaohui.com/vueImg/avatar1.jpg',
+                avatarImg: 'http://halo.lxyccc.top/f778738c-e4f8-4870-b634-56703b4acafe_1608734603765.gif',
                 myProjectData: [
                     {
                         name_en: 'Hui Admin Pro',

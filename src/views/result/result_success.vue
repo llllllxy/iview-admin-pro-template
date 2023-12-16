@@ -1,8 +1,3 @@
-/**
-*   @description 成功页面
-*   @author Xiaohui Zeng
-*   @date 2019/10/17
-*/
 <template>
     <div class="result_success-page flexC">
         <div class="pageHead flexC">

@@ -1,8 +1,4 @@
-/**
-*   @description 高级详情
-*   @author Xiaohui Zeng
-*   @date 2019/10/17
-*/
+
 <template>
     <div class="advanced_detail-page flexC">
         <div class="pageHead flexC">

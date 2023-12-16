@@ -1,8 +1,3 @@
-/**
-*   @description 基础详情
-*   @author Xiaohui Zeng
-*   @date 2019/10/17
-*/
 <template>
     <div class="basic_detail-page flexC">
         <div class="pageHead flexC">
