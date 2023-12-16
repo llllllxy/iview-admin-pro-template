@@ -1,12 +1,10 @@
-import Mock from 'mockjs'
 
 // 用户信息
 let userData = [
     {
         userId: 'admin',
-        userName: '管理员',
+        username: '管理员',
         avatar: 'http://halo.lxyccc.top/f778738c-e4f8-4870-b634-56703b4acafe_1608734603765.gif',
-        password: '123456',
         email: 'f123456@qq.com',
         address: '山东省 济南市 高新区',
         roles: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], // 用户拥有的角色 数组
@@ -252,52 +250,49 @@ let userData = [
     },
     {
         userId: 'admin1',
-        userName: 'admin1',
-        password: '123456',
+        username: 'admin1',
         roles: [1, 2, 3, 4, 5,] // 用户拥有的角色 数组
-    },
-    {
-        userId: 'admin2',
-        userName: 'admin2',
-        password: '123456',
-        roles: [1, 2, 3, 4, 5,] // 用户拥有的角色 数组
-    },
-]
-// 登陆
-export const login = (prarms) => {
-    const prarmsObj = JSON.parse(prarms.body);
-    let backData = {}
-    if (prarmsObj.userName === 'admin') {
-        backData = Mock.mock({
-            userInfo: userData[0],
-            token: 'oiik292983kkslqlo9922'
-        })
-    } else if (prarmsObj.userName === 'admin1') {
-        backData = Mock.mock({
-            userInfo: userData[1],
-            token: '2312312312312312312'
-        })
-    } else {
-        backData = Mock.mock({
-            userInfo: userData[2],
-            token: '6755756756756756775'
-        })
     }
+]
 
-    if (checkData(prarmsObj.userName, backData.userInfo.userId)
-        && checkData(prarmsObj.passWord, backData.userInfo.password)) {
-        return {code: 1, data: backData, msg: '登录成功，欢迎回来'}
+
+// 登录
+export const login = (params) => {
+    const paramsObj = JSON.parse(params.body);
+    let backData = {}
+    if (paramsObj.username === 'admin') {
+        backData = {
+            token: 'oiik292983kkslqlo9922'
+        }
+        if (paramsObj.password == "123456") {
+            return {code: 0, data: backData, msg: '登录成功，欢迎回来！'}
+        } else {
+            return {code: 500, msg: '账号或密码错误！'}
+        }
+    } else if (paramsObj.username === 'admin1') {
+        backData = {
+            token: '2312312312312312312'
+        }
+        if (paramsObj.password == "123456") {
+            return {code: 0, data: backData, msg: '登录成功，欢迎回来！'}
+        } else {
+            return {code: 500, msg: '账号或密码错误！'}
+        }
     } else {
-        return {code: 0, msg: '账号或密码错误'}
+        return {code: 500, msg: '账号或密码错误！'}
     }
 }
-// 数据校验
-const checkData = (d1, d2) => {
-    if (d1 === d2) {
-        return true
-    } else {
-        return false
-    }
+
+// 退出登录
+export const logout = () => {
+    return {code: 0, data: null, msg: '退出登录成功！'}
+}
+
+// 退出登录
+export const getInfo = () => {
+    let backData = {}
+    backData.userInfo = userData[0]
+    return {code: 0, data: backData, msg: '获取信息成功！'}
 }
 
 //数据占位符使用

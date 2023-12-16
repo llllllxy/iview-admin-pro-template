@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 // 引入接口模板
-import {login} from './mock'
+import {getInfo, login, logout} from './mock'
 
 Mock.setup({
     // 设置延迟响应，模拟向后端请求数据
@@ -10,5 +10,7 @@ Mock.setup({
 // Mock.mock( url, post/get , 返回的数据)；
 // Mock.mock(/\/api\/healthPlat\/getRecipe\/\w*\/\w*/, 'post', )
 Mock.mock('/dev-api/login', 'post', login)
+Mock.mock('/dev-api/logout', 'post', logout)
+Mock.mock('/dev-api/getInfo', 'post', getInfo)
 
 export default Mock;
