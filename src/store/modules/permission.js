@@ -86,9 +86,9 @@ const getHomeRoute = (routers, homeName = 'home') => {
  */
 const getBreadCrumbList = (route, homeRoute) => {
   let homeItem = { ...homeRoute, icon: homeRoute.meta.icon }
-  let routeMetched = route.matched
-  if (routeMetched.some(item => item.name === homeRoute.name)) return [homeItem]
-  let res = routeMetched.filter(item => {
+  let routeMatched = route.matched
+  if (routeMatched.some(item => item.name === homeRoute.name)) return [homeItem]
+  let res = routeMatched.filter(item => {
     return item.meta === undefined || !item.meta.hide
   }).map(item => {
     let meta = { ...item.meta }
