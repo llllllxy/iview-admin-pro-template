@@ -1,6 +1,6 @@
 import router from './index'
 import store from '../store'
-import {indexPage, loginPage, siteTitle} from "../config/config";
+import {indexPage, loginPage, siteTitle} from "@/config/config";
 import Vue from "vue";
 import ViewUI from 'view-design';
 
