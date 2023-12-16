@@ -11,25 +11,25 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.19.0",
-    "babel-polyfill": "^6.26.0",
-    "core-js": "^2.6.5",
-    "echarts": "^4.3.0",
-    "mockjs": "^1.1.0",
-    "moment": "^2.24.0",
-    "view-design": "^4.7.0",
-    "vue": "^2.6.11",
-    "vue-qr": "^3.2.4",
-    "vue-router": "^3.5.1",
-    "vuex": "^3.1.2",
-    "wangeditor": "^3.1.1"
+    "axios": "0.21.4",
+    "babel-polyfill": "6.26.0",
+    "core-js": "2.6.5",
+    "echarts": "4.9.0",
+    "mockjs": "1.1.0",
+    "moment": "2.29.4",
+    "view-design": "4.7.0",
+    "vue": "2.6.11",
+    "qrcodejs2": "0.0.2",
+    "vue-router": "3.5.1",
+    "vuex": "3.6.2",
+    "wangeditor": "3.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-service": "^3.12.1",
-    "less": "^3.0.4",
-    "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.11",
-    "webpackbar": "^5.0.2"
+    "@vue/cli-plugin-babel": "3.12.1",
+    "@vue/cli-service": "3.12.1",
+    "less": "3.0.4",
+    "less-loader": "5.0.0",
+    "vue-template-compiler": "2.6.11",
+    "webpackbar": "5.0.2"
   }
 }
