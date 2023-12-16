@@ -6,7 +6,6 @@ const resolve = (dir) => {
 };
 
 
-
 module.exports = {
     publicPath: "./", // ./相对路径
     outputDir: "dist",
@@ -17,8 +16,12 @@ module.exports = {
         open: true,
         proxy: {
             '/dev-api': {
-                target: 'https://www.fastmock.site/mock/8b8187de5502cc6a522b78638621c2c4/HuiAdmin/',
+                target: 'https://www.fastmock.site/mock/00e1901228c9f92cbd69705ba612eece/pro-api',
                 pathRewrite: { '^/dev-api': '' }
+            },
+            '/pro-api': {
+                target: 'https://www.fastmock.site/mock/00e1901228c9f92cbd69705ba612eece/pro-api',
+                pathRewrite: { '^/pro-api': '' }
             }
         }
     },
